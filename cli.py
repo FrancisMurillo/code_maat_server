@@ -18,9 +18,9 @@ class CLI:
         if not isdir(log_dir):
             makedirs(self.log_dir)
 
-    def generate_raw_log(self,
-                         start_date=datetime.now(),
-                         end_date=datetime.now()):
+    def generate_log_file(self,
+                          start_date=datetime.now(),
+                          end_date=datetime.now()):
         start_format = datetime.strftime(start_date, "%Y-%m-%d")
         end_format = datetime.strftime(end_date, "%Y-%m-%d")
         log_file_name = "log--%s--%s.log" % (start_format, end_format)
@@ -39,7 +39,31 @@ class CLI:
 
         return log_file
 
-    def generate_summary(self, log_file):
+    def generate_summary_file(self, log_file):
+        command_file = self._rename_extension(log_file, "--summary.csv")
+
+        command_output = self._execute_code_maat(
+            log_file,
+            "summary")
+
+        with open(command_file, 'wb') as f:
+            f.write(command_output)
+
+        return command_file
+
+    def generate_coupling_file(self, log_file):
+        command_file = self._rename_extension(log_file, "--coupling.csv")
+
+        command_output = self._execute_code_maat(
+            log_file,
+            "coupling")
+
+        with open(command_file, 'wb') as f:
+            f.write(command_output)
+
+        return command_file
+
+    def generate_coupling(self, log_file):
         command_file = self._rename_extension(log_file, "--summary.csv")
 
         command_output = self._execute_code_maat(
