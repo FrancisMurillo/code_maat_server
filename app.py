@@ -59,6 +59,8 @@ def log_file():
         return jsonify(read_csv_file(cli.generate_summary_file(log_file)))
     elif analysis == 'coupling':
         return jsonify(read_csv_file(cli.generate_coupling_file(log_file)))
+    elif analysis == 'age':
+        return jsonify(read_csv_file(cli.generate_age_file(log_file)))
     else:
         return ("ERROR: Analysis type not in selection.", 400)
 

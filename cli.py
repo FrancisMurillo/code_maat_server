@@ -64,12 +64,12 @@ class CLI:
 
         return command_file
 
-    def generate_coupling(self, log_file):
-        command_file = self._rename_extension(log_file, "--summary.csv")
+    def generate_age_file(self, log_file):
+        command_file = self._rename_extension(log_file, "--age.csv")
 
         command_output = self._execute_code_maat(
             log_file,
-            "summary")
+            "age")
 
         with open(command_file, 'wb') as f:
             f.write(command_output)
