@@ -1,16 +1,20 @@
+import sys
 from shutil import which
-from os import path
+from os import path, chdir, getcwd
 
 from flask import Flask, request, jsonify
 
 import config
-from util import read_csv_file, parse_date
+from util import read_csv_file, parse_date, is_git_dir
 from cli import CLI
+
+
+working_dir = sys.argv[1] if len(sys.argv) > 1 else getcwd()
 
 
 app = Flask(__name__)
 app.config.from_object(config)
-
+app.config['GIT_DIR'] = working_dir
 
 # Check setting
 if not which(app.config['JAVA_COMMAND']):
@@ -22,12 +26,20 @@ if not which(app.config['GIT_COMMAND']):
                          app.config['GIT_COMMAND'])
 
 if not path.isfile(app.config['CODE_MAAT_JAR_FILE']):
-    raise AssertionError("Code Maat jar file, %s, doesnot exist." %
+    raise AssertionError("Code Maat jar file, %s, does not exist." %
                          app.config['CODE_MAAT_JAR_FILE'])
+
+if not is_git_dir(working_dir):
+    raise AssertionError("Directory, %s, is not a git repo." %
+                         app.config['GIT_DIR'])
 
 
 # Object
-cli = CLI(**app.config)
+cli = CLI(
+    code_maat_jar_file=app.config['CODE_MAAT_JAR_FILE'],
+    git_command=app.config['GIT_COMMAND'],
+    java_command=app.config['JAVA_COMMAND'],
+    git_dir=app.config['GIT_DIR'])
 
 
 # Routing

@@ -1,6 +1,6 @@
 from datetime import datetime
 from os.path import join, isdir, splitext
-from os import getcwd, makedirs
+from os import getcwd, makedirs, chdir
 from subprocess import check_output
 
 
@@ -10,7 +10,9 @@ class CLI:
                  git_command='git',
                  java_command='java',
                  log_dir=join(getcwd(), '.logs'),
+                 git_dir=getcwd(),
                  **_keywords):
+        self.git_dir = git_dir
         self.log_dir = log_dir
         self.git_command = git_command
         self.java_command = java_command
@@ -142,13 +144,23 @@ class CLI:
         return splitext(raw_file)[0] + new_extension
 
     def _execute_git(self, command, *cli_args):
-        return check_output([
+        temp_dir = getcwd()
+        chdir(self.git_dir)
+
+        output = check_output([
             self.git_command,
             command,
-            *cli_args])
+            *cli_args]).strip()
+
+        chdir(temp_dir)
+
+        return output
 
     def _execute_code_maat(self, log_file, command, *extra_args):
-        return check_output([
+        temp_dir = getcwd()
+        chdir(self.git_dir)
+
+        output = check_output([
             self.java_command,
             "-jar",
             self.code_maat_jar_file,
@@ -158,4 +170,8 @@ class CLI:
             "git",
             "-a",
             command,
-            *extra_args])
+            *extra_args]).strip()
+
+        chdir(temp_dir)
+
+        return output
