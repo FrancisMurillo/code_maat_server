@@ -88,6 +88,18 @@ class CLI:
 
         return command_file
 
+    def generate_author_churn_file(self, log_file):
+        command_file = self._rename_extension(log_file, "--author-churn.csv")
+
+        command_output = self._execute_code_maat(
+            log_file,
+            "author-churn")
+
+        with open(command_file, 'wb') as f:
+            f.write(command_output)
+
+        return command_file
+
     def _rename_extension(self, raw_file, new_extension):
         return splitext(raw_file)[0] + new_extension
 
