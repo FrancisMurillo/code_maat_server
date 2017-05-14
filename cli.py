@@ -24,7 +24,7 @@ class CLI:
         log_file_name = "log--%s--%s.log" % (start_format, end_format)
         log_file = join(self.log_dir, log_file_name)
 
-        log_output = self.execute_git(
+        log_output = self._execute_git(
             "log",
             "--pretty=format:'[%h] %aN %ad %s'",
             "--date=short",
@@ -37,7 +37,7 @@ class CLI:
 
         return log_file
 
-    def execute_git(self, command, *cli_args):
+    def _execute_git(self, command, *cli_args):
         return check_output([
             self.git_command,
             command,
