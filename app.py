@@ -73,6 +73,9 @@ def log_file():
     elif analysis == 'entity-ownership':
         return jsonify(
             read_csv_file(cli.generate_entity_ownership_file(log_file)))
+    elif analysis == 'entity-effort':
+        return jsonify(
+            read_csv_file(cli.generate_entity_effort_file(log_file)))
     else:
         return ("ERROR: Analysis type not in selection.", 400)
 
