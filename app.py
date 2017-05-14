@@ -67,6 +67,9 @@ def log_file():
     elif analysis == 'author-churn':
         return jsonify(
             read_csv_file(cli.generate_author_churn_file(log_file)))
+    elif analysis == 'entity-churn':
+        return jsonify(
+            read_csv_file(cli.generate_entity_churn_file(log_file)))
     else:
         return ("ERROR: Analysis type not in selection.", 400)
 
