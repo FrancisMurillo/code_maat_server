@@ -18,7 +18,7 @@ class CLI:
         if not isdir(log_dir):
             makedirs(self.log_dir)
 
-    def generate_log(self, start_date=datetime.now(), end_date=datetime.now()):
+    def generate_raw_log(self, start_date=datetime.now(), end_date=datetime.now()):
         start_format = datetime.strftime(start_date, "%Y-%m-%d")
         end_format = datetime.strftime(end_date, "%Y-%m-%d")
         log_file_name = "log--%s--%s.log" % (start_format, end_format)
@@ -37,8 +37,24 @@ class CLI:
 
         return log_file
 
+    def generate_summary(self, log_file):
+        pass
+
     def _execute_git(self, command, *cli_args):
         return check_output([
             self.git_command,
             command,
             *cli_args])
+
+    def _execute_code_maat(self, log_file, command, *extra_args):
+        return check_output([
+            self.java_command,
+            "-jar",
+            self.code_maat_jar_file,
+            "-l",
+            log_file,
+            "-c",
+            "git",
+            "-a",
+            command,
+            *extra_args])
