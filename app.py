@@ -61,6 +61,9 @@ def log_file():
         return jsonify(read_csv_file(cli.generate_coupling_file(log_file)))
     elif analysis == 'age':
         return jsonify(read_csv_file(cli.generate_age_file(log_file)))
+    elif analysis == 'abs-churn':
+        return jsonify(
+            read_csv_file(cli.generate_absolute_churn_file(log_file)))
     else:
         return ("ERROR: Analysis type not in selection.", 400)
 
