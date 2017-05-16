@@ -46,8 +46,8 @@ cli = CLI(
 @app.route('/api', methods=['GET'])
 def log_file():
     analysis = request.args.get('analysis')
-    start_date = request.args.get('start_date')
-    end_date = request.args.get('end_date')
+    start_date = request.args.get('start-date')
+    end_date = request.args.get('end-date')
 
     # Parameter
     try:
