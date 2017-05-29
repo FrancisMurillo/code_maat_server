@@ -69,6 +69,8 @@ def log_file():
 
     if analysis is None or analysis == 'summary':
         return jsonify(read_csv_file(cli.generate_summary_file(log_file)))
+    elif analysis == 'revision':
+        return jsonify(read_csv_file(cli.generate_revision_file(log_file)))
     elif analysis == 'coupling':
         return jsonify(read_csv_file(cli.generate_coupling_file(log_file)))
     elif analysis == 'age':

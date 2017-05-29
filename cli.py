@@ -66,6 +66,18 @@ class CLI:
 
         return command_file
 
+    def generate_revision_file(self, log_file):
+        command_file = self._rename_extension(log_file, "--revision.csv")
+
+        command_output = self._execute_code_maat(
+            log_file,
+            "revisions")
+
+        with open(command_file, 'wb') as f:
+            f.write(command_output)
+
+        return command_file
+
     def generate_age_file(self, log_file):
         command_file = self._rename_extension(log_file, "--age.csv")
 
