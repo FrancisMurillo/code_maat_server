@@ -13,7 +13,7 @@ class CLI:
                  git_dir=getcwd(),
                  **_keywords):
         self.git_dir = git_dir
-        self.log_dir = log_dir
+        self.log_dir = git_dir
         self.git_command = git_command
         self.java_command = java_command
         self.code_maat_jar_file = code_maat_jar_file
