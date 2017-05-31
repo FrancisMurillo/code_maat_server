@@ -18,7 +18,7 @@ class CLI:
         self.java_command = java_command
         self.code_maat_jar_file = code_maat_jar_file
 
-        if not isdir(log_dir):
+        if not isdir(self.log_dir):
             makedirs(self.log_dir)
 
     def generate_log_file(self,
