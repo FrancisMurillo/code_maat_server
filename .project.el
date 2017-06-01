@@ -10,13 +10,13 @@
     :cwd (projectile-project-root))
 
   (prodigy-define-tag
-    :name 'code-maater-pyenv
-    :command "./code-maater/bin/python")
+    :name 'pyenv
+    :command (expand-file-name "./code-maater/bin/python"))
 
 
   (fn/prodigy-define-service
    :name fbn/code-maat-viewer-backend-service-name
-   :tags '(code-maat-viewer-backend code-maater-pyenv)
+   :tags '(pyenv code-maat-viewer-backend)
    :args `("app.py")
 
    ;; Custom Binding

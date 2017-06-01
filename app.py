@@ -43,7 +43,11 @@ cli = CLI(
 
 
 # Routing
-@app.route('/api', methods=['GET'])
+@app.route ('/api/' , methods=['GET'])
+def blank ():
+    pass
+
+@app.route('/api/code-maat', methods=['GET'])
 def log_file():
     analysis = request.args.get('analysis')
     start_date = request.args.get('start-date')
