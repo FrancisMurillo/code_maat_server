@@ -1,8 +1,9 @@
 import sys
 from shutil import which
-from os import path, chdir, getcwd
+from os import path, getcwd
 
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 import config
 from util import read_csv_file, parse_date, is_git_dir
@@ -13,6 +14,7 @@ working_dir = sys.argv[1] if len(sys.argv) > 1 else getcwd()
 
 
 app = Flask(__name__)
+CORS(app)
 app.config.from_object(config)
 app.config['GIT_DIR'] = working_dir
 
@@ -43,9 +45,10 @@ cli = CLI(
 
 
 # Routing
-@app.route ('/api/' , methods=['GET'])
-def blank ():
+@app.route('/api/', methods=['GET'])
+def blank():
     pass
+
 
 @app.route('/api/code-maat', methods=['GET'])
 def log_file():
