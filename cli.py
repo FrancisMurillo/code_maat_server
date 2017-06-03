@@ -9,11 +9,11 @@ class CLI:
                  code_maat_jar_file=join(getcwd(),  'code-maat.jar'),
                  git_command='git',
                  java_command='java',
-                 log_dir=join(getcwd(), '.logs'),
+                 log_dir=None,
                  git_dir=getcwd(),
                  **_keywords):
         self.git_dir = git_dir
-        self.log_dir = git_dir
+        self.log_dir = log_dir if log_dir else join(git_dir, '.logs')
         self.git_command = git_command
         self.java_command = java_command
         self.code_maat_jar_file = code_maat_jar_file
