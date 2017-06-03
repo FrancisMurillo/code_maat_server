@@ -3,7 +3,6 @@ from os.path import join, isdir, splitext
 from os import getcwd, makedirs, chdir
 from subprocess import check_output
 
-
 class CLI:
     def __init__(self,
                  code_maat_jar_file=join(getcwd(),  'code-maat.jar'),
@@ -151,6 +150,15 @@ class CLI:
             f.write(command_output)
 
         return command_file
+
+    def get_commits(self):
+        lines = self._execute_git('log', '--format=%cI,%H').split(b"\n")
+        entries = [line.split(b",") for line in lines]
+
+        return [dict([
+            ['commitDate', entry[0]],
+            ['commitHash', entry[1]]
+        ]) for entry in entries]
 
     def _rename_extension(self, raw_file, new_extension):
         return splitext(raw_file)[0] + new_extension

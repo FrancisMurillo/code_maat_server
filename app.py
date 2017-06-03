@@ -50,6 +50,11 @@ def blank():
     pass
 
 
+@app.route('/api/commits', methods=['GET'])
+def commit_entries():
+    return jsonify(cli.get_commits())
+
+
 @app.route('/api/code-maat', methods=['GET'])
 def log_file():
     analysis = request.args.get('analysis')
