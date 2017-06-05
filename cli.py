@@ -152,8 +152,9 @@ class CLI:
         return command_file
 
     def get_commits(self):
-        lines = self._execute_git('log', '--format=%cI,%H').split(b"\n")
-        entries = [line.split(b",") for line in lines]
+        text = self._execute_git('log', '--format=%cI,%H').decode('utf-8')
+        lines = text.split("\n")
+        entries = [line.split(",") for line in lines]
 
         return [dict([
             ['commitDate', entry[0]],

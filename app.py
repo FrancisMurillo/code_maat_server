@@ -106,5 +106,7 @@ def log_file():
         return ("ERROR: Analysis type not in selection.", 400)
 
 
+app_port = 30080
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=30080)
+    app.run(host='0.0.0.0', port=app_port)

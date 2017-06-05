@@ -17,7 +17,8 @@
   (fn/prodigy-define-service
    :name fbn/code-maat-viewer-backend-service-name
    :tags '(pyenv code-maat-viewer-backend)
-   :args `("app.py")
+   :args `("app.py"
+           ,(expand-file-name "~/Fakespace/redux-sandbox/code_maat_viewer"))
 
    ;; Custom Binding
    :bind-command-name "code-maat-viewer-backend"
