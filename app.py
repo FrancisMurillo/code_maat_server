@@ -68,8 +68,7 @@ def clear_log_files():
     delete_dir_files(cache_dir)
     return jsonify({
         "message": "Log directory is now cleared.",
-        "logDir": cache_dir
-    })
+        "logDir": cache_dir})
 
 @app.route('/api/code-maat', methods=['GET'])
 def log_file():

@@ -1,7 +1,8 @@
 from datetime import datetime
-from os.path import join, isdir, splitext
+from os.path import join, isfile, isdir, splitext
 from os import getcwd, makedirs, chdir
 from subprocess import check_output
+
 
 class CLI:
     def __init__(self,
@@ -16,6 +17,7 @@ class CLI:
         self.git_command = git_command
         self.java_command = java_command
         self.code_maat_jar_file = code_maat_jar_file
+        self.cache = True
 
         if not isdir(self.log_dir):
             makedirs(self.log_dir)
@@ -27,6 +29,9 @@ class CLI:
         end_format = datetime.strftime(end_date, "%Y-%m-%d")
         log_file_name = "log--%s--%s.log" % (start_format, end_format)
         log_file = join(self.log_dir, log_file_name)
+
+        if self.cache and isfile(log_file):
+            return log_file
 
         log_output = self._execute_git(
             "log",
@@ -44,6 +49,9 @@ class CLI:
     def generate_summary_file(self, log_file):
         command_file = self._rename_extension(log_file, "--summary.csv")
 
+        if self.cache and isfile(command_file):
+            return command_file
+
         command_output = self._execute_code_maat(
             log_file,
             "summary")
@@ -55,6 +63,9 @@ class CLI:
 
     def generate_coupling_file(self, log_file):
         command_file = self._rename_extension(log_file, "--coupling.csv")
+
+        if self.cache and isfile(command_file):
+            return command_file
 
         command_output = self._execute_code_maat(
             log_file,
@@ -68,6 +79,9 @@ class CLI:
     def generate_revision_file(self, log_file):
         command_file = self._rename_extension(log_file, "--revision.csv")
 
+        if self.cache and isfile(command_file):
+            return command_file
+
         command_output = self._execute_code_maat(
             log_file,
             "revisions")
@@ -79,6 +93,9 @@ class CLI:
 
     def generate_age_file(self, log_file):
         command_file = self._rename_extension(log_file, "--age.csv")
+
+        if self.cache and isfile(command_file):
+            return command_file
 
         command_output = self._execute_code_maat(
             log_file,
@@ -92,6 +109,9 @@ class CLI:
     def generate_absolute_churn_file(self, log_file):
         command_file = self._rename_extension(log_file, "--absolute-churn.csv")
 
+        if self.cache and isfile(command_file):
+            return command_file
+
         command_output = self._execute_code_maat(
             log_file,
             "abs-churn")
@@ -104,6 +124,9 @@ class CLI:
     def generate_author_churn_file(self, log_file):
         command_file = self._rename_extension(log_file, "--author-churn.csv")
 
+        if self.cache and isfile(command_file):
+            return command_file
+
         command_output = self._execute_code_maat(
             log_file,
             "author-churn")
@@ -115,6 +138,9 @@ class CLI:
 
     def generate_entity_churn_file(self, log_file):
         command_file = self._rename_extension(log_file, "--entity-churn.csv")
+
+        if self.cache and isfile(command_file):
+            return command_file
 
         command_output = self._execute_code_maat(
             log_file,
@@ -129,6 +155,9 @@ class CLI:
         command_file = self._rename_extension(
             log_file, "--entity-ownership.csv")
 
+        if self.cache and isfile(command_file):
+            return command_file
+
         command_output = self._execute_code_maat(
             log_file,
             "entity-ownership")
@@ -141,6 +170,9 @@ class CLI:
     def generate_entity_effort_file(self, log_file):
         command_file = self._rename_extension(
             log_file, "--entity-effort.csv")
+
+        if self.cache and isfile(command_file):
+            return command_file
 
         command_output = self._execute_code_maat(
             log_file,
