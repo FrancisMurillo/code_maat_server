@@ -1,5 +1,6 @@
 import sys
 from shutil import which
+import os
 from os import path, getcwd
 
 from flask import Flask, request, jsonify
@@ -54,6 +55,21 @@ def blank():
 def commit_entries():
     return jsonify(cli.get_commits())
 
+
+def delete_dir_files(cache_dir):
+    filelist = [f for f in os.listdir(cache_dir)]
+    for f in filelist:
+        os.remove(path.join(cache_dir, f))
+
+
+@app.route('/api/code-maat', methods=['DELETE'])
+def clear_log_files():
+    cache_dir = cli.log_dir
+    delete_dir_files(cache_dir)
+    return jsonify({
+        "message": "Log directory is now cleared.",
+        "logDir": cache_dir
+    })
 
 @app.route('/api/code-maat', methods=['GET'])
 def log_file():
